@@ -30,4 +30,8 @@ app.post('/company/:companyId/customer/:customerId/address', addAddress);
 app.delete('/company/:companyId/customer/:customerId', deleteCustomer);
 app.delete('/company/:companyId/customer/:customerId/address/:addressId', deleteAddress);
 
+app.get('/', function(req:any, res:any){
+  res.send('This is a test API for oriontek by Fabian Johnson');
+})
+
 exports.api = functions.https.onRequest(app);
