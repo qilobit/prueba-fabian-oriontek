@@ -33,7 +33,8 @@ export const addCustomer = async (req: any, res: any) => {
       const newCustomerRef = companyRef.collection(Collections.customers);
       await trans.create(newCustomerRef.doc(), {
         name,
-        address_count: 0
+        address_count: 0,
+        created_at: admin.firestore.FieldValue.serverTimestamp()
       });
 
       await trans.update(companyRef, {

@@ -42,4 +42,5 @@ export default {
 .text-center{
   text-align: center;
 }
+
 </style>

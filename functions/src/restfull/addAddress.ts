@@ -27,7 +27,8 @@ export const addAddress = async (req: any, res: any) => {
         address, 
         city, 
         state, 
-        zip_code
+        zip_code,
+        created_at: admin.firestore.FieldValue.serverTimestamp()
       });
 
       await trans.update(customerRef, {

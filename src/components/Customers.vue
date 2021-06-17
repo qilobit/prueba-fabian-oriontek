@@ -19,6 +19,7 @@
             <tr>
               <th>Name</th>
               <th>Address count</th>
+              <th>Created at</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -26,6 +27,7 @@
             <tr v-for="x in customers" :key="x.id" >
               <td>{{ x.name }}</td>
               <td>{{ x.address_count }}</td>
+              <td>{{ x.created_at }}</td>
               <td>
                 <a href="#" @click.prevent="drop(x)" title="Delete" class="mr-1"><span class="fa fa-trash text-danger"></span></a>&nbsp;
                 <router-link :to="`/customer/${x.id}`" title="Details" >

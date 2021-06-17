@@ -24,6 +24,7 @@
                   <th>City</th>
                   <th>State</th>
                   <th>Zip code</th>
+                  <th>Created at</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -33,6 +34,7 @@
                   <td>{{ x.city }}</td>
                   <td>{{ x.state }}</td>
                   <td>{{ x.zip_code }}</td>
+                  <td>{{ x.created_at }}</td>
                   <td>
                     <a href="#" @click.prevent="drop(x)" title="Delete" class="mr-1"><span class="fa fa-trash text-danger"></span></a>&nbsp;
                   </td>

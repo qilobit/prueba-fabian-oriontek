@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import { Collections } from '../commons/Collections';
+import { formatDate } from '../commons/utils';
 
 export const getCustomerAddress = async (req: any, res: any) => {
   const { companyId, customerId } = req.params;
@@ -18,12 +19,18 @@ export const getCustomerAddress = async (req: any, res: any) => {
   console.log('IN getCustomerAddress ',companyId);
 
   try {
-    const customerData = await customerRef.get();
+    const customerSnapshot = await customerRef.get();
+    const customerData = customerSnapshot.data();
     const addressSnapshot = await customerRef.collection(Collections.address).get();
     const addresslist = addressSnapshot.docs.map((address: FirebaseFirestore.DocumentSnapshot) => {
+      const data = address.data();
       return {
         id: address.id,
-        ...address.data()
+        address: data?.address,
+        city: data?.city,
+        state: data?.state,
+        zip_code: data?.zip_code,
+        created_at: formatDate(data?.created_at.toDate())
       };
     });
 
@@ -32,7 +39,9 @@ export const getCustomerAddress = async (req: any, res: any) => {
       data: {
         customer: {
           id: customerRef.id,
-          ...customerData.data()
+          name: customerData?.name,
+          address_count: customerData?.address_count,
+          created_at: formatDate(customerData?.created_at.toDate())
         },
         address_list: addresslist
       }
