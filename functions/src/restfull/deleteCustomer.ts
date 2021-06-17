@@ -1,12 +1,11 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { Collections } from '../commons/Collections';
 
-export const deleteCustomer = functions.https.onRequest(async (req: any, res: any) => {
-  const { companyId, customerId } = req.body;
+export const deleteCustomer = async (req: any, res: any) => {
+  const { companyId, customerId } = req.params;
 
   if(!companyId || !customerId){
-    return res.json({
+    return res.send({
       ok: false,
       data: 'Missing parameters (companyId, customerId)'
     });
@@ -22,16 +21,26 @@ export const deleteCustomer = functions.https.onRequest(async (req: any, res: an
     
     await customerRef.delete();
 
-    return res.json({
+    _firestore.runTransaction(async (trans) => {
+
+      await trans.delete(customerRef);
+
+      await trans.update(companyRef, {
+        customer_count: admin.firestore.FieldValue.increment(-1)
+      });
+
+    });
+
+    return res.send({
       ok: true,
     });
     
   } catch (error) {
     console.log('ERROR deleteCustomer ',error);
-    return res.json({
+    return res.send({
       ok: false,
       data: error.message
     });
   }
 
-});
+};

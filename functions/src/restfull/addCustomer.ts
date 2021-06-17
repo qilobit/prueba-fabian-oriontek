@@ -1,12 +1,12 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { Collections } from '../commons/Collections';
 
-export const addCustomer = functions.https.onRequest(async (req: any, res: any) => {
-  const { companyId, name } = req.body;
+export const addCustomer = async (req: any, res: any) => {
+  const { companyId } = req.params; 
+  const { name } = req.body;
 
   if(!companyId || !name){
-    return res.json({
+    return res.send({
       ok: false,
       data: 'Missing parameters (companyId, name)'
     });
@@ -19,24 +19,31 @@ export const addCustomer = functions.https.onRequest(async (req: any, res: any) 
 
   try {
     
-    const newCustomer = await companyRef.collection(Collections.customers).add({
-      name
+    _firestore.runTransaction(async (trans) => {
+
+      const newCustomerRef = companyRef.collection(Collections.customers);
+      await trans.create(newCustomerRef.doc(), {
+        name,
+        address_count: 0
+      });
+
+      await trans.update(companyRef, {
+        customer_count: admin.firestore.FieldValue.increment(1)
+      });
+
     });
 
-    return res.json({
+    return res.send({
       ok: true,
-      data: {
-        id: newCustomer.id,
-        name: name
-      }
+      data: ''
     });
     
   } catch (error) {
     console.log('ERROR addCustomer ',error);
-    return res.json({
+    return res.send({
       ok: false,
       data: error.message
     });
   }
 
-});
+};

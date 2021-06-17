@@ -1,12 +1,11 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { Collections } from '../commons/Collections';
 
-export const getCustomers = functions.https.onRequest(async (req: any, res: any) => {
-  const { companyId } = req.query;
+export const getCustomers = async (req: any, res: any) => {
+  const { companyId } = req.params;
 
   if(!companyId){
-    return res.json({
+    return res.send({
       ok: false,
       data: 'Missing parameter (companyId)'
     });
@@ -19,7 +18,7 @@ export const getCustomers = functions.https.onRequest(async (req: any, res: any)
 
   try {
     
-    const customersSnapshot = await companyRef.collection(Collections.customers).get();
+    const customersSnapshot = await companyRef.collection(Collections.customers).orderBy('name').get();
     const customers = customersSnapshot.docs.map((customer: FirebaseFirestore.DocumentSnapshot) => {
       return {
         id: customer.id,
@@ -27,17 +26,17 @@ export const getCustomers = functions.https.onRequest(async (req: any, res: any)
       };
     });
 
-    return res.json({
+    return res.send({
       ok: true,
       data: customers
     });
     
   } catch (error) {
     console.log('ERROR getCustomers ',error);
-    return res.json({
+    return res.send({
       ok: false,
       data: error.message
     });
   }
 
-});
+};
