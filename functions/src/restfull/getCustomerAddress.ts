@@ -1,6 +1,5 @@
 import * as admin from 'firebase-admin';
 import { Collections } from '../commons/Collections';
-import { formatDate } from '../commons/utils';
 
 export const getCustomerAddress = async (req: any, res: any) => {
   const { companyId, customerId } = req.params;
@@ -30,7 +29,7 @@ export const getCustomerAddress = async (req: any, res: any) => {
         city: data?.city,
         state: data?.state,
         zip_code: data?.zip_code,
-        created_at: formatDate(data?.created_at.toDate())
+        created_at: data?.created_at.toDate().toDateString()
       };
     });
 
@@ -41,7 +40,7 @@ export const getCustomerAddress = async (req: any, res: any) => {
           id: customerRef.id,
           name: customerData?.name,
           address_count: customerData?.address_count,
-          created_at: formatDate(customerData?.created_at.toDate())
+          created_at: customerData?.created_at.toDate().toDateString()
         },
         address_list: addresslist
       }

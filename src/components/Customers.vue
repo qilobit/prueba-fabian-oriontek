@@ -80,7 +80,11 @@ export default {
   async created(){
     this.loading = true;
     const res = await CustomerService.getCustomers(GLOBAL_COMPANY);
-    this.customers = res.data;
+    if(res.ok){
+      this.customers = res.data;
+    }else{
+      this.$helpers.message('Error', 'Something went wrong getting customers list');
+    }
     this.loading = false;
   }
 }
