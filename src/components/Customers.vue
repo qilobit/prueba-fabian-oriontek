@@ -16,7 +16,7 @@
           <thead class="table-primary">
             <tr>
               <th>Name</th>
-              <th>Total address</th>
+              <th>Address count</th>
               <th>Actions</th>
             </tr>
           </thead>
