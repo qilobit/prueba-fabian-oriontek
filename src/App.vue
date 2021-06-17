@@ -7,9 +7,7 @@
           <i class="fa fa-home"></i>
           Contacts manager
         </router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+
       </div>
     </nav>
     <div class="container mt-3">
