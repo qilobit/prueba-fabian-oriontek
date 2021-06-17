@@ -2,9 +2,7 @@
   <div class="">
     <GoHome />
     <div v-if="loading">
-      <div class="text-center">
-        <span class="fa fa-4x fa-spin fa-circle-notch"></span>
-      </div>
+      <Loading />
     </div>
     <div v-else>
       <div class="row mt-3">
@@ -49,9 +47,12 @@
 </template>
 
 <script>
+import { GLOBAL_COMPANY } from '../commons/constants';
 import {AddressService} from '../services/AddressService';
 import {CustomerService} from '../services/CustomerService';
 import GoHome from './GoHome.vue';
+import Loading from './Loading.vue';
+
 export default {
   name: 'CustomerDetail',
   data(){
@@ -64,13 +65,13 @@ export default {
       loading: true
     }
   },
-  components: {GoHome},
+  components: {GoHome, Loading},
   methods: {
     async drop(address){
       const confirm = await this.$helpers.confirm('This can\' be undone');
       if(confirm === true){
         try {
-          const res = await AddressService.deleteCustomerAddress('6LBUW53f8jY0k6dgqxUS', this.customer.id, address.id);
+          const res = await AddressService.deleteCustomerAddress(GLOBAL_COMPANY, this.customer.id, address.id);
           if(res.ok){
             this.addressList = this.addressList.filter(c => c.id !== address.id);
             this.$helpers.toast('Address deleted!');
@@ -85,7 +86,7 @@ export default {
   },
   async created(){
     this.loading = true;
-    const res = await CustomerService.getCustomerWithAdress('6LBUW53f8jY0k6dgqxUS', this.$route.params.id);
+    const res = await CustomerService.getCustomerWithAdress(GLOBAL_COMPANY, this.$route.params.id);
     this.addressList = res.data.address_list;
     this.customer = res.data.customer;
     this.loading = false;

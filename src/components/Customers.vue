@@ -9,7 +9,9 @@
         </router-link>
       </div>
     </div>
-    <div class="row mt-3">
+
+    <Loading v-if="loading" />
+    <div v-else class="row mt-3">
       <div class="col-12 col-md-10">
 
         <table class="table table-responsive table-bordered table-sm">
@@ -35,24 +37,30 @@
         </table>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
+import { GLOBAL_COMPANY } from '../commons/constants';
 import {CustomerService} from '../services/CustomerService';
+import Loading from './Loading.vue';
+
 export default {
   name: 'Customers',
   data(){
     return {
+      loading: false,
       customers: []
     }
   },
+  components: {Loading},
   methods: {
     async drop(customer){
       const confirm = await this.$helpers.confirm('This can\' be undone');
       if(confirm === true){
         try {
-          const res = await CustomerService.deleteCustomer('6LBUW53f8jY0k6dgqxUS', customer.id);
+          const res = await CustomerService.deleteCustomer(GLOBAL_COMPANY, customer.id);
           if(res.ok){
             this.customers = this.customers.filter(c => c.id !== customer.id);
             this.$helpers.toast('Customer deleted!');
@@ -66,10 +74,10 @@ export default {
     }
   },
   async created(){
-    
-    const res = await CustomerService.getCustomers('6LBUW53f8jY0k6dgqxUS');
+    this.loading = true;
+    const res = await CustomerService.getCustomers(GLOBAL_COMPANY);
     this.customers = res.data;
-    
+    this.loading = false;
   }
 }
 </script>

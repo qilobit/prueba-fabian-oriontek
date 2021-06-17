@@ -47,6 +47,7 @@
 <script>
 import {AddressService} from '../services/AddressService';
 import GoHome from './GoHome.vue';
+import {GLOBAL_COMPANY} from '../commons/constants';
 export default {
   name: 'AddCustomer',
   components: {GoHome},
@@ -99,7 +100,7 @@ export default {
       this.loading = true;
       try {
         const res = await AddressService.saveCustomerAddress(
-          '6LBUW53f8jY0k6dgqxUS', 
+          GLOBAL_COMPANY, 
           this.$route.params.id,
           this.address,
           this.city,

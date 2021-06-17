@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { GLOBAL_COMPANY } from '../commons/constants';
 import {CustomerService} from '../services/CustomerService';
 import GoHome from './GoHome.vue';
 export default {
@@ -47,7 +48,7 @@ export default {
       this.error = false;
       this.loading = true;
       try {
-        const res = await CustomerService.saveCustomer('6LBUW53f8jY0k6dgqxUS', this.name);
+        const res = await CustomerService.saveCustomer(GLOBAL_COMPANY, this.name);
         if(res.ok){
           this.name = '';
           this.$helpers.toast('Customer created!');

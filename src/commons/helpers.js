@@ -14,7 +14,8 @@ function toast(title, type){
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 3000
+    icon: type,
+    timer: 1500
   })
   .fire({
     type: type,
