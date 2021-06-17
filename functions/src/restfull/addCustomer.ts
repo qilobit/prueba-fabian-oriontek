@@ -18,7 +18,16 @@ export const addCustomer = async (req: any, res: any) => {
   console.log('IN addCustomer ', companyId, name);
 
   try {
-    
+
+    const customerWithThatName = await companyRef.collection(Collections.customers).where('name', '==', name).get();
+
+    if(customerWithThatName.docs.length > 0){
+      return res.send({
+        ok: false,
+        data: 'A customer with that name already exists'
+      });
+    }
+
     _firestore.runTransaction(async (trans) => {
 
       const newCustomerRef = companyRef.collection(Collections.customers);

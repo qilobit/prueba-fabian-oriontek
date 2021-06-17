@@ -37,9 +37,6 @@
                 <td>{{ x.zip_code }}</td>
                 <td>
                   <a href="#" @click.prevent="drop(x)" title="Delete" class="mr-1"><span class="fa fa-trash text-danger"></span></a>&nbsp;
-                  <router-link :to="`/customer/${x.id}`" title="Details" >
-                    <i class="fa fa-eye text-info"></i>
-                  </router-link>
                 </td>
               </tr>
             </tbody>
