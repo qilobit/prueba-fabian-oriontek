@@ -18,29 +18,30 @@
       </div>
       <div class="row mt-3">
         <div class="col-12 col-md-10">
-
-          <table class="table table-responsive table-bordered table-sm">
-            <thead class="table-primary">
-              <tr>
-                <th>Address</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip code</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="x in addressList" :key="x.id" >
-                <td>{{ x.address }}</td>
-                <td>{{ x.city }}</td>
-                <td>{{ x.state }}</td>
-                <td>{{ x.zip_code }}</td>
-                <td>
-                  <a href="#" @click.prevent="drop(x)" title="Delete" class="mr-1"><span class="fa fa-trash text-danger"></span></a>&nbsp;
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+              <thead class="table-primary">
+                <tr>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Zip code</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="x in addressList" :key="x.id" >
+                  <td>{{ x.address }}</td>
+                  <td>{{ x.city }}</td>
+                  <td>{{ x.state }}</td>
+                  <td>{{ x.zip_code }}</td>
+                  <td>
+                    <a href="#" @click.prevent="drop(x)" title="Delete" class="mr-1"><span class="fa fa-trash text-danger"></span></a>&nbsp;
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>      
     </div>
