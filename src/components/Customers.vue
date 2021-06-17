@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <Loading v-if="loading" />
+    <Loading v-if="loading" class="mt-3" />
     <div v-else class="row mt-3">
       <div class="col-12 col-md-10">
 
@@ -60,6 +60,7 @@ export default {
       const confirm = await this.$helpers.confirm('This can\' be undone');
       if(confirm === true){
         try {
+          this.loading = true;
           const res = await CustomerService.deleteCustomer(GLOBAL_COMPANY, customer.id);
           if(res.ok){
             this.customers = this.customers.filter(c => c.id !== customer.id);
@@ -70,6 +71,7 @@ export default {
         } catch (error) {
           this.$helpers.message('Error', 'Something went wrong');
         }
+        this.loading = false;
       }
     }
   },

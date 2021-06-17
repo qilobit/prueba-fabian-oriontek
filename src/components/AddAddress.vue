@@ -6,39 +6,41 @@
 
     <div class="col-md-10 col-12 content text-left mt-3">
       <h3>Add new address</h3>
-      <div class="border p-3">
+      <form @submit.prevent="save">
+        <div class="border p-3">
 
-        <div class="form-group">
-          <label for="address">Address</label>
-          <input ref="address" type="text" id="address" v-model="address" class="form-control">
-          <span v-if="errors.address" class="text-danger">Address is required</span>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input ref="address" type="text" id="address" v-model="address" class="form-control">
+            <span v-if="errors.address" class="text-danger">Address is required</span>
+          </div>
+
+          <div class="form-group">
+            <label for="city">City</label>
+            <input ref="city" type="text" id="city" v-model="city" class="form-control">
+            <span v-if="errors.city" class="text-danger">City is required</span>
+          </div>
+
+          <div class="form-group">
+            <label for="state">State</label>
+            <input ref="state" type="text" id="state" v-model="state" class="form-control">
+            <span v-if="errors.state" class="text-danger">State is required</span>
+          </div>
+
+          <div class="form-group">
+            <label for="zip_code">Zip code</label>
+            <input ref="zipCode" type="text" id="zip_code" v-model="zipCode" class="form-control">
+            <span v-if="errors.zipCode" class="text-danger">Zip code is required</span>
+          </div>        
+
+          <div class="form-group text-right mt-3">
+            <button :disabled="loading" type="submit" class="btn btn-success">
+              <div v-if="!loading"><i class="fa fa-save"></i> Save</div>
+              <div v-else>Wait...</div>
+            </button>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label for="city">City</label>
-          <input ref="city" type="text" id="city" v-model="city" class="form-control">
-          <span v-if="errors.city" class="text-danger">City is required</span>
-        </div>
-
-        <div class="form-group">
-          <label for="state">State</label>
-          <input ref="state" type="text" id="state" v-model="state" class="form-control">
-          <span v-if="errors.state" class="text-danger">State is required</span>
-        </div>
-
-        <div class="form-group">
-          <label for="zip_code">Zip code</label>
-          <input ref="zipCode" type="text" id="zip_code" v-model="zipCode" class="form-control">
-          <span v-if="errors.zipCode" class="text-danger">Zip code is required</span>
-        </div>        
-
-        <div class="form-group text-right mt-3">
-          <button :disabled="loading" @click="save" class="btn btn-success">
-            <div v-if="!loading"><i class="fa fa-save"></i> Save</div>
-            <div v-else>Wait...</div>
-          </button>
-        </div>
-      </div>
+      </form>
     </div>    
   </div>
 
@@ -114,7 +116,8 @@ export default {
           this.state = '';
           this.zipCode = '';
           this.$helpers.toast('Address created!');
-
+          this.$refs.address.focus();
+          
         }else{
           this.$helpers.message('Error', res.data);
         }

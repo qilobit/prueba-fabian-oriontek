@@ -7,17 +7,19 @@
     <div class="col-md-10 col-12 content text-left mt-3">
       <h3>Add new customer</h3>
       <div class="border p-3">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input ref="_name" type="text" id="name" v-model="name" class="form-control">
-          <span v-if="error" class="text-danger">Name is required</span>
-        </div>
-        <div class="form-group text-right mt-3">
-          <button :disabled="loading" @click="save" class="btn btn-success">
-            <div v-if="!loading"><i class="fa fa-save"></i> Save</div>
-            <div v-else>Wait...</div>
-          </button>
-        </div>
+        <form @submit.prevent="save">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input ref="_name" type="text" id="name" v-model="name" class="form-control">
+            <span v-if="error" class="text-danger">Name is required</span>
+          </div>
+          <div class="form-group text-right mt-3">
+            <button :disabled="loading" type="submit" class="btn btn-success">
+              <div v-if="!loading"><i class="fa fa-save"></i> Save</div>
+              <div v-else>Wait...</div>
+            </button>
+          </div>
+        </form>
       </div>
     </div>    
   </div>

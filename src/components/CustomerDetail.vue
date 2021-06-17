@@ -71,6 +71,7 @@ export default {
       const confirm = await this.$helpers.confirm('This can\' be undone');
       if(confirm === true){
         try {
+          this.loading = true;
           const res = await AddressService.deleteCustomerAddress(GLOBAL_COMPANY, this.customer.id, address.id);
           if(res.ok){
             this.addressList = this.addressList.filter(c => c.id !== address.id);
@@ -81,6 +82,7 @@ export default {
         } catch (error) {
           this.$helpers.message('Error', 'Something went wrong');
         }
+        this.loading = false;
       }
     }
   },
